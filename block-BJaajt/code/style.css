@@ -53,32 +53,75 @@ table {
     box-sizing: border-box;
 }
 
-.cats ,.users{
-    width: 700px;
-    margin: 20px auto;
+html {
+    background-color: #f6ddb4;
+    text-align: center;
 }
-.users img {
-    width: 400px;
-    height: 400px;
+header{
+    background-color: black;
+    color: white;
+    padding: 15px;
+    font-size: 2.2rem;
+}
+input{
+    font-size: 1rem;
+    margin-top: 25px;
+    padding: 5px 25px;
+    border: 2px solid blue;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+.info img{
+    width: 250px;
+    height: 250px;
     border-radius: 50%;
 }
-h3 {
-    font-size: 32px;
-    padding: 10px;
+.info h3{
+    font-size: 2rem;
+    font-weight: 900;
+    margin-bottom: 10px;
 }
-li {
-    font-size: 20px;
-    padding: 5px 25px;
+.info p{
+    font-size: 1.2rem;
 }
-
-
-.cats img{
+.details{
+    display: inline-block;
+    margin: 25px auto;
+    font-size: 1.4rem;
+}
+.list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.list ul {
+    display: flex;
+    flex-wrap: wrap;
+}
+.list li{
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-left: 10px;
+}
+.list li img {
     width: 100%;
-    height: 400px;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.cats h3{
+    font-size: 3rem;
+    margin: 25px auto 15px auto;
+}
+.cats img {
+    width: 300px;
+    height: 300px;
+    display: block;
+    margin: 0 auto;
 }
 .cats button{
-    margin-top: 20px;
-    margin-left: 20px;
-    padding: 10px;
-    border: 1px solid black;
+    margin: 15px auto 25px auto;
+    padding: 10px 15px;
+    font-size: 1rem;
 }
