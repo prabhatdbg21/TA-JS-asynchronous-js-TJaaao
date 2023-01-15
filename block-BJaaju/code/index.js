@@ -1,32 +1,46 @@
-let input = document.querySelector('input');
-let imgDiv = document.querySelector('.img-div')
+const url = 'https://api.unsplash.com/photos/?client_id=I0qAL6RY8JqjJJow9Adr5NtlfDNDvD80kEJq-_tOqHI' ;
+const getSearchURL = (query) =>  {
+    return `https://api.unsplash.com/search/photos?query=${query}&client_id=I0qAL6RY8JqjJJow9Adr5NtlfDNDvD80kEJq-_tOqHI`;
+}
 
-function addImage (info){
-    imgDiv.innerHTML = '';
-    info.forEach(eachInfo => {
+const searchElm = document.querySelector('input');
+const root = document.querySelector('.img-div');
+
+function fetch(url, successHandler) {
+    let xhr = new XMLHttpRequest();
+    xhr.open('GET', url);
+    xhr.onload = function (){
+        let data = JSON.parse(xhr.response); 
+        successHandler(data);
+    }
+    xhr.onerror = function () {
+        console.log('something went wrong ...')
+    }
+    xhr.send();
+}
+
+
+function displayImages (images){
+    root.innerHTML = '';
+    images.forEach((image) => {
         let li = document.createElement('li');
         let img = document.createElement('img');
-        img.src = eachInfo.urls.small;
+        img.src = image.urls.small;
         li.append(img);
-        imgDiv.append(li)
+        root.append(li)
     });
 }
 
-function handleChange (event){
-    if(event.keyCode === 13){
-        let xhr = new XMLHttpRequest();
+fetch(url, displayImages);
 
-        xhr.open('GET', 'https://api.unsplash.com/photos/?client_id=T8FUFisobh8YqM8oZ8UVCmnY5wm-X_KGn4vDNZm-N4U');
-        xhr.onload = function (){
-            let data = JSON.parse(xhr.response); 
-            addImage(data)
-        }
-        xhr.onerror = function () {
-            console.log('something went wrong ...')
-        }
-        xhr.send();
-        event.target.value = '';
+function handleSearch (event){
+    if(event.keyCode === 13 ){
+        fetch(getSearchURL(searchElm.value), (searchResult) => {
+            displayImages(searchResult.results);
+        });
+
+        searchElm.value = '';
     }
 }
 
-input.addEventListener('keyup', handleChange);
+searchElm.addEventListener('keyup', handleSearch);
