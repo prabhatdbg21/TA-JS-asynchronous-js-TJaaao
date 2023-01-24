@@ -4,9 +4,9 @@
 let promiseResolved = new Promise((resolve, reject) => {
     setTimeout(() => resolve(`Promise Resolved!`), 1000);
 })
-.then((value) => {
-    console.log(value);
-})
+
+promiseResolved.then((msg) => { console.log(msg) })
+// 0R promiseResolved.then(console.log)
 ```
 
 2. Create another promise. Now have it reject with a value of `Rejected Promise!` without using `setTimeout`. Print the contents of the promise after it has been rejected by passing console.log to `.catch`
@@ -15,8 +15,9 @@ let promiseResolved = new Promise((resolve, reject) => {
 let promiseRejected = new Promise((resolve, reject) => {
     reject(`Rejected Promise!`)
 })
-.catch((value) => {
-    console.log(value);
+
+promiseRejected .catch((msg) => {
+    console.log(msg);
 })
 ```
 
@@ -59,7 +60,9 @@ B
 ```js
 function wait(time){
     return new Promise((resolve, reject) => {
-        setTimeout(() => resolve(`Promise Resolved!`), time);
+        setTimeout(() => {
+            resolve(`Promise Resolved!`)
+        }, time);
     })
     .then((value) => {
         console.log(value);
@@ -82,8 +85,12 @@ let promideAdd = new Promise ((resolve, reject) => {
 })
 .then((value) => value + 10)
 .then((value) => value + 100)
-.then((value) => console.log(`${value} is greater than 100 is ${value > 100}`))
-.catch(() => console.log('error'))
+.then((value) => {
+    if(value > 100){
+        throw new Error('Something went wrong!')
+    }
+})
+.catch(console.log)
 ```
 
 7. Do the following:
@@ -96,11 +103,23 @@ let promideAdd = new Promise ((resolve, reject) => {
 
 ```js
 let promideA = new Promise ((resolve, reject) => {
-    resolve('A')
+    resolve(['A'])
 })
-.then((value) => value.concat('B'))
-.then((value) => value.concat('B')) // not solved 
-.then((value) => console.log(value))
+    .then((value) => {
+        console.log(value);
+        return value.concat('B');
+    })
+    .then((value) => {
+        console.log(value);
+        
+        return value.reduce((acc, cv, i) => {
+            acc[i] = cv;
+            return acc;
+        }, {});
+    })
+    .then((value) => {
+        console.log(value)
+    })
 ```
 
 8. Do the following:
@@ -115,18 +134,19 @@ let first = new Promise ((resolve, reject) => {
     resolve(1)
 })
 
-first.then((value) => {
-    console.log(value);
-    return 2
-})
-.then((value) => {
-    console.log(value);
-    return 3
-})
-.then((value) => {
-    console.log(value);
-    return 4
-})
+first
+    .then((value) => {
+        console.log(value);
+        return 2
+    })
+    .then((value) => {
+        console.log(value);
+        return 3
+    })
+    .then((value) => {
+        console.log(value);
+        return 4
+    })
 ```
 
 9. Do the following:
@@ -173,19 +193,17 @@ But in Question 9 they are independent
 let name = new Promise ((resolve, reject) => {
     resolve(`John`)
 })
-.then((value) => {
-    return (`Arya`)
-})
-.then((value) => {
-    console.log(value);
-    return (`Bran`)
-    /*
-    return (setTimeout(() => {
-        (`Bran`)
-    }, 2000))
-    */
-})
-.then((value) => {
-    console.log(value);
-})
+    .then((value) => {
+        return promish.resolve(`Arya`)
+    })
+    .then((value) => {
+        console.log(value);
+        
+        return new Promise ((res) => {
+            setTimeout(() => res(`Bran`), 2000)
+        })
+    })
+    .then((value) => {
+        console.log(value);
+    })
 ```
