@@ -1,6 +1,7 @@
 - Create four promises that resolve after 1, 2, 3 and 4 seconds with a random value. Using `Promise.all` log the value of each promise that it resolved with.
 
 ```js
+/*
 let first = new Promise ((res, rej) => {
     setTimeout(() => res(`after 1 sec`), 1000)
 });
@@ -16,13 +17,27 @@ let four = new Promise ((res, rej) => {
 
 let all = Promise.all([first, second, third, four])
     .then((info) => console.log(info))
+;
+
+OR
+*/
+
+let time = [1, 2, 3, 4];
+let timePromise = time.map(
+  (second) => new Promise((res) => {
+    setTimeout(() => res(Math.random()), second * 1000)
+  })
+);
+
+Promise.all(timePromise).then(console.log);
 ```
 
 - Create a list of 5 Github usernames in an array and using `Promise.all` get access to the data of each user from GitHub API. Log the number of followers of each user.
 
 ```js
-const usernames = ['getify', 'gaearon', 'AArnott', 'piranha', 'sophiebits'];
-const usernamesData = Promise.all(
+const usersnames = ['getify', 'gaearon', 'AArnott', 'piranha', 'sophiebits'];
+/*
+const usersnamesData = Promise.all(
     usernames.map((user) =>
         fetch(`https://api.github.com/users/${user}`)
         .then((res) => res.json())
@@ -32,6 +47,18 @@ const usernamesData = Promise.all(
         console.log(user.followers)
     })
 })
+
+OR
+*/
+let userPromises = usersnames.map((user) => {
+  return fetch(`https://api.github.com/users/${user}`)
+    .then((res) => res.json())
+})
+
+Promise.all(userPromises)
+  .then((users) => {
+    users.forEach((user) => console.log(user.followers))
+  })
 ```
 
 - Use `Promise.race` to see which API resolves faster from the given list of URLs. Log the object you get from the promise that is resolved faster.
@@ -64,10 +91,10 @@ const three = new Promise((resolve, reject) =>
 );
 
 Promise.allSettled([one, two, three])
-    .then((res) => console.log(res))
+    .then((info) => console.log(info))
 
 Promise.all([one, two, three])
-    .then((res) => console.log(res))   // Uncaught (in promise) Error: Whoops!  (Promise.all not working)
+    .then((info) => console.log(info))   // Uncaught (in promise) Error: Whoops!  (Promise.all not working)
 ```
 
 - What will be the output of the following code snippet? How much time will it take for the promise to resolve?
