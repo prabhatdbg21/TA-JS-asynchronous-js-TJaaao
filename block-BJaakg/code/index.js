@@ -38,7 +38,7 @@ function createBook(info) {
 function charact(char){
     let div = document.createElement('div');
     let p = document.createElement('p');
-    p.innerText = `${char.name} : (${char.aliases})`;
+    p.innerText = `${char.name} : (${char.aliases.join(' ')})`;
     div.append(p)
     allcharacters.append(div)
 }
